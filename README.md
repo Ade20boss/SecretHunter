@@ -18,8 +18,8 @@ A lightweight Static Application Security Testing (SAST) tool written in Python.
 No external dependencies are required. This script runs on standard Python 3.
 
 ```bash
-git clone https://github.com/yourusername/sensitive-data-hunter.git
-cd sensitive-data-hunter
+git clone https://github.com/Ade20boss/SecretHunter.git
+cd SecretHunter
 
 ```
 
