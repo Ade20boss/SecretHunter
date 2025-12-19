@@ -8,8 +8,7 @@ A lightweight Static Application Security Testing (SAST) tool written in Python.
 * **Pattern Recognition:** Uses compiled Regex with capture groups to identify:
 * **Standard Emails:** `user@domain.com`
 * **Hardcoded Passwords:** Variable assignments like `db_password = "secret"` or JSON keys `"password": "123"`.
-
-
+* **API Keys:** api_key = "12345", STRIPE_API_KEY = "sk_live_..."
 * **Smart Filtering:** Automatically ignores binary files (images, executables) and focuses on text-based extensions (`.py`, `.txt`, `.json`, `.env`, etc.).
 * **Robust Error Handling:** Features `errors='ignore'` encoding handling to prevent crashes on corrupted files or mixed-encoding environments.
 
@@ -27,7 +26,7 @@ cd SecretHunter
 
 1. Run the script:
 ```bash
-python sensitive_data_hunter.py
+python secretHunter.py
 
 ```
 
@@ -49,6 +48,8 @@ Opening Files and reading lines...
 [ALERT: PASSWORD] Found in config.py (Line 12)
    LEAKED PASSWORD: "SuperSecretKey123!"
 ------------------------------
+[ALERT: API KEY] Found in config.py (Line 12)
+   LEAKED API_KEY: "sk_live_51Mz..."
 
 Operation completed successfully.
 
@@ -62,8 +63,8 @@ Operation completed successfully.
 4. **Content Analysis:**
 * Reads the file line-by-line using `enumerate()` to track location.
 * Applies Regex logic to detect patterns.
-* **Password Regex Logic:** `[\w\"]*password[\w\"]*\s*[:=]\s*['\"](.*?)['\"]`
-* Catches `password = "x"`, `db_password = "x"`, and `"password": "x"`.
+* **Password Regex Logic:** `[\w\"]*password[\w\"]*\s*[:=]\s*['\"](.*?)['\"], re.IGNORECASE`
+* **API_KEY_REGEX_LOGIC:** `[\w]*api[_-]?key\s*[:=]\s*['\"](.*?)['\"]", re.IGNORECASE`
 * Uses a capture group to extract only the secret value inside the quotes.
 
 
